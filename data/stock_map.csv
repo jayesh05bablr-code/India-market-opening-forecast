@@ -1,0 +1,32 @@
+symbol,india_sector,adr
+RELIANCE,Oil & Gas,
+ONGC,Oil & Gas,
+BPCL,Oil & Gas,
+TCS,IT,
+INFY,IT,INFY
+WIPRO,IT,WIT
+HCLTECH,IT,
+TECHM,IT,
+HDFCBANK,Banks,HDB
+ICICIBANK,Banks,IBN
+SBIN,Banks,
+KOTAKBANK,Banks,
+AXISBANK,Banks,
+BAJFINANCE,Financial Services,
+SUNPHARMA,Pharma,
+DRREDDY,Pharma,RDY
+CIPLA,Pharma,
+MARUTI,Auto,
+TATAMOTORS,Auto,
+M&M,Auto,
+HINDUNILVR,FMCG,
+ITC,FMCG,
+NESTLEIND,FMCG,
+TATASTEEL,Metals,
+JSWSTEEL,Metals,
+HINDALCO,Metals,
+LT,Capital Goods,
+BHARTIARTL,Telecom,
+NTPC,Power,
+POWERGRID,Power,
+DLF,Realty,

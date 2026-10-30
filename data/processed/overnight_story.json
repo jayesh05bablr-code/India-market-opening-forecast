@@ -1,0 +1,111 @@
+{
+  "as_of_close": "2026-10-29",
+  "next_open": "2026-10-30",
+  "us_session": "Thu 29 Oct 2026",
+  "overnight_complete": true,
+  "usdinr": 95.259,
+  "usdinr_chg": -0.0002388295461765999,
+  "mood": "Flat",
+  "lines": [
+    "Wall Street (session of Thu 29 Oct): the S&P 500 slightly fell 0.38% and the Nasdaq 100 fell 1.42%. A weak US close usually weighs on Indian openings.",
+    "Strongest US sectors: Health Care +2.40%, Real Estate +2.21%, Consumer Staples +1.54%. Weakest: Communication Services -1.87%, Technology -1.18%, Energy +0.38%.",
+    "US Financials rose 1.44%, a tailwind for Indian Banks (ICICIBANK, HDFCBANK). Global bank and rate sentiment carries over to Indian lenders.",
+    "US Technology fell 1.18%, a headwind for Indian IT (INFY, TCS). Indian IT earns most revenue from US clients and trades with US tech sentiment.",
+    "US Energy rose 0.38%, a tailwind for Indian Oil & Gas (RELIANCE). US energy stocks track crude oil, the main driver for Indian oil and gas names.",
+    "The rupee was steady to \u20b995.26 per dollar, so currency is not a big factor today.",
+    "Putting it together, the model expects your 5 stocks to open -0.01% on average, with 3 of 5 opening higher."
+  ],
+  "moves": [
+    {
+      "ticker": "SPY",
+      "name": "S&P 500",
+      "ret": -0.0038197226502310055,
+      "sessions": 1.0,
+      "is_sector": false
+    },
+    {
+      "ticker": "QQQ",
+      "name": "Nasdaq 100",
+      "ret": -0.014153553756888204,
+      "sessions": 1.0,
+      "is_sector": false
+    },
+    {
+      "ticker": "XLK",
+      "name": "Technology",
+      "ret": -0.01183240837696331,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLF",
+      "name": "Financials",
+      "ret": 0.014430785676109004,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLE",
+      "name": "Energy",
+      "ret": 0.003798392987582,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLV",
+      "name": "Health Care",
+      "ret": 0.024037352548408775,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLY",
+      "name": "Consumer Discretionary",
+      "ret": 0.007543570623428364,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLP",
+      "name": "Consumer Staples",
+      "ret": 0.01543067710732382,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLB",
+      "name": "Materials",
+      "ret": 0.012919398380254465,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLI",
+      "name": "Industrials",
+      "ret": 0.009733455413766023,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLC",
+      "name": "Communication Services",
+      "ret": -0.018712429707194222,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLU",
+      "name": "Utilities",
+      "ret": 0.015297717109908238,
+      "sessions": 1.0,
+      "is_sector": true
+    },
+    {
+      "ticker": "XLRE",
+      "name": "Real Estate",
+      "ret": 0.022074554948967373,
+      "sessions": 1.0,
+      "is_sector": true
+    }
+  ]
+}

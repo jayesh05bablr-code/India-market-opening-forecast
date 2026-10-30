@@ -1,0 +1,23 @@
+symbol,investor,investor_type,country,stake_pct,as_of
+HDFCBANK,"Domestic institutions (mutual funds, insurers, banks)",DII,India,43.44,2026-10-21
+HDFCBANK,Foreign portfolio investors (FII/FPI),FII/FPI,Foreign,39.39,2026-10-21
+HDFCBANK,Government,Government,India,0.19,2026-10-21
+HDFCBANK,Public / retail and others,Retail,India,16.96,2026-10-21
+ICICIBANK,"Domestic institutions (mutual funds, insurers, banks)",DII,India,41.77,2026-10-21
+ICICIBANK,Foreign portfolio investors (FII/FPI),FII/FPI,Foreign,34.68,2026-10-21
+ICICIBANK,Government,Government,India,0.22,2026-10-21
+ICICIBANK,Public / retail and others,Retail,India,23.32,2026-10-21
+INFY,"Domestic institutions (mutual funds, insurers, banks)",DII,India,42.66,2026-10-21
+INFY,Foreign portfolio investors (FII/FPI),FII/FPI,Foreign,27.44,2026-10-21
+INFY,Government,Government,India,0.2,2026-10-21
+INFY,Promoter & promoter group,Promoter,India,13.9,2026-10-21
+INFY,Public / retail and others,Retail,India,15.59,2026-10-21
+RELIANCE,"Domestic institutions (mutual funds, insurers, banks)",DII,India,21.62,2026-10-21
+RELIANCE,Foreign portfolio investors (FII/FPI),FII/FPI,Foreign,16.67,2026-10-21
+RELIANCE,Government,Government,India,0.17,2026-10-21
+RELIANCE,Promoter & promoter group,Promoter,India,50.44,2026-10-21
+RELIANCE,Public / retail and others,Retail,India,11.08,2026-10-21
+TCS,"Domestic institutions (mutual funds, insurers, banks)",DII,India,13.57,2026-10-21
+TCS,Foreign portfolio investors (FII/FPI),FII/FPI,Foreign,9.01,2026-10-21
+TCS,Promoter & promoter group,Promoter,India,71.77,2026-10-21
+TCS,Public / retail and others,Retail,India,5.66,2026-10-21

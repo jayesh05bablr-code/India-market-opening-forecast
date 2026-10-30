@@ -1,0 +1,13 @@
+india_sector,us_etf,us_sector,fx_exposure,why_us,why_fx
+IT,XLK,Technology,1.0,"Indian IT earns most revenue from US clients and trades with US tech sentiment","IT exporters earn dollars, so a weaker rupee lifts their rupee earnings"
+Banks,XLF,Financials,0.0,"Global bank and rate sentiment carries over to Indian lenders","Domestic lenders are mostly insulated, though a sharp rupee fall can trigger foreign selling"
+Financial Services,XLF,Financials,0.0,"Global financials sentiment carries over to Indian NBFCs and insurers","Mostly domestic business"
+Oil & Gas,XLE,Energy,-0.5,"US energy stocks track crude oil, the main driver for Indian oil and gas names","India imports most of its crude, so a weaker rupee raises input costs"
+Pharma,XLV,Health Care,1.0,"US health care sentiment matters because the US is the largest market for Indian generics","Pharma exporters earn dollars, so a weaker rupee helps"
+Auto,XLY,Consumer Discretionary,-0.5,"US consumer discretionary reflects global demand for vehicles and spending","Imported parts and commodities get costlier when the rupee weakens"
+FMCG,XLP,Consumer Staples,-0.25,"US staples are a defensive barometer, like Indian FMCG","Some imported raw materials such as palm oil get costlier with a weaker rupee"
+Metals,XLB,Materials,0.5,"US materials track global metal prices","Metal prices are set in dollars, so a weaker rupee lifts realisations"
+Capital Goods,XLI,Industrials,0.0,"US industrials reflect the global capex cycle","Mixed: some exports, some imported equipment"
+Telecom,XLC,Communication Services,-0.25,"US communication services set the tone for telecom and media","Network equipment is largely imported"
+Power,XLU,Utilities,-0.25,"US utilities reflect the interest-rate and defensive trade","Imported coal and equipment get costlier with a weaker rupee"
+Realty,XLRE,Real Estate,0.0,"US real estate is driven by rates, as Indian realty is","Mostly domestic business"

@@ -1,0 +1,6 @@
+# One NSE symbol per line. Start small (5-20 liquid stocks), then grow.
+RELIANCE
+TCS
+HDFCBANK
+INFY
+ICICIBANK
