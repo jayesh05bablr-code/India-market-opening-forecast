@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>D1 Project Charter</title>
+<style>
+@page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 10pt; line-height: 1.42; color: #1a1a1a; }
+h1 { font-size: 19pt; margin: 0 0 2pt; color: #12365c; }
+h2 { font-size: 12.5pt; color: #12365c; border-bottom: 1.5px solid #12365c; padding-bottom: 2pt; margin: 16pt 0 6pt; page-break-after: avoid; }
+h3 { font-size: 10.5pt; margin: 9pt 0 3pt; page-break-after: avoid; }
+p { margin: 3pt 0 6pt; }
+ul { margin: 2pt 0 6pt 0; padding-left: 16pt; } li { margin: 1.5pt 0; }
+table { border-collapse: collapse; width: 100%; margin: 4pt 0 8pt; font-size: 9.2pt; }
+tr { break-inside: avoid; }
+.keep { page-break-inside: avoid; }
+th, td { border: 1px solid #b9c3cf; padding: 3.5pt 5pt; vertical-align: top; text-align: left; }
+th { background: #e8eef5; }
+.sub { color: #555; font-size: 10.5pt; margin-bottom: 8pt; }
+.meta td:first-child { width: 28%; font-weight: bold; background: #f4f7fa; }
+.box { border-left: 3px solid #12365c; background: #f4f7fa; padding: 6pt 9pt; margin: 6pt 0 8pt; }
+.small { font-size: 8.6pt; color: #555; }
+.c { text-align: center; }
+</style></head><body>
+
+<h1>Project Charter (D1)</h1>
+<div class="sub">Analytics Capstone Project (ANCP), Term 5 &middot; Module M1: Problem Framing</div>
+
+<table class="meta">
+<tr><td>Project title</td><td>Next-Day Opening Price Prediction for NSE-Listed Stocks using End-of-Day Market Data and Company Fundamentals</td></tr>
+<tr><td>Team members</td><td>Jayesh Santosh Shinde &middot; Abhishek Manuel N &middot; Abinash Pradhan</td></tr>
+<tr><td>Faculty</td><td>Mr Nikhil D Jonathan</td></tr>
+<tr><td>Date of submission</td><td>16 October 2026</td></tr>
+<tr><td>Process model</td><td>CRISP-DM (Business Understanding &rarr; Data Understanding &rarr; Data Preparation &rarr; Modelling &rarr; Evaluation &rarr; Deployment)</td></tr>
+<tr><td>Linked course outcomes</td><td>CO1 (problem formulation, success criteria, scope, data plan); CO6 (team plan, deadlines, ownership)</td></tr>
+</table>
+
+<h2>1. Business Context and Stakeholders</h2>
+<p>Every trading day on the National Stock Exchange (NSE) opens with a pre-open call auction (09:00&ndash;09:15 IST) in which the opening price is discovered. The opening price frequently differs from the previous day's close: news, quarterly results, global market moves and overnight sentiment all arrive while the market is shut. Traders, portfolio managers and treasury desks must decide <em>before</em> the open whether to place, hold or re-price orders, and today they mostly rely on the simple assumption that "tomorrow opens where today closed" or on informal judgement.</p>
+<table class="keep">
+<tr><th style="width:24%">Stakeholder</th><th style="width:38%">Interest / decision</th><th>What they need from us</th></tr>
+<tr><td>Retail and proprietary traders</td><td>Whether to place pre-open orders, and at what limit price</td><td>A predicted opening price per stock with a realistic range</td></tr>
+<tr><td>Portfolio managers / fund dealers</td><td>Timing of planned buys and sells; avoiding a poor opening fill</td><td>Early warning of large expected gaps, ranked by stock</td></tr>
+<tr><td>Risk managers</td><td>Overnight exposure and margin planning</td><td>Expected gap size and uncertainty band</td></tr>
+<tr><td>Faculty / course assessors</td><td>Rigour, leakage-free validation, honest baselines</td><td>Documented, reproducible pipeline and evaluation</td></tr>
+</table>
+
+<h2>2. Problem Statement</h2>
+<div class="box"><strong>Decision:</strong> Before the NSE opens on day <em>t+1</em>, how should a trader price pre-open orders for a given stock?<br>
+<strong>Analytics question:</strong> Using only information available at the close of day <em>t</em> (that day's OHLCV bar, recent price history, market-wide movement and the latest published company fundamentals), can we predict the opening price of each stock on day <em>t+1</em> more accurately than the naive "open = previous close" rule, and give a reliable range around that prediction?</div>
+<p><strong>Problem type:</strong> supervised regression on panel time-series data. The model predicts the <em>overnight gap</em>, (Open<sub>t+1</sub> &divide; Close<sub>t</sub>) &minus; 1, which is then converted to a rupee opening price. Predicting the gap rather than the raw price keeps the target comparable across stocks of very different price levels and avoids a model that merely copies yesterday's close.</p>
+
+<h3>Scope</h3>
+<table class="keep">
+<tr><th style="width:50%">In scope</th><th>Out of scope</th></tr>
+<tr><td><ul>
+<li>A universe of 5 large, liquid NSE stocks (RELIANCE, TCS, HDFCBANK, INFY, ICICIBANK), expanding to 20&ndash;50 NIFTY 50 constituents once the pipeline is stable</li>
+<li>Daily data from January 2015 to the present</li>
+<li>Price, volume and market-wide features plus quarterly fundamentals</li>
+<li>One prediction per stock per trading day, with a 10&ndash;90% range</li>
+<li>A batch pipeline and a Streamlit dashboard as the prototype</li></ul></td>
+<td><ul>
+<li>Intraday or tick-level prediction, and prices after the open</li>
+<li>Automated order placement or live trading</li>
+<li>Investment advice or a profitability guarantee</li>
+<li>Small-cap / illiquid stocks and derivatives (F&amp;O)</li>
+<li>News or social-media text sentiment (a possible extension only)</li></ul></td></tr>
+</table>
+
+<h2>3. Success Metrics and Acceptance Criteria</h2>
+<p>All metrics are measured out of sample with walk-forward (expanding-window) validation over at least 5 time-ordered folds. The benchmark is the naive baseline <em>Open<sub>t+1</sub> = Close<sub>t</sub></em>; a second baseline uses the historical mean gap from the training window.</p>
+<table class="keep">
+<tr><th style="width:26%">Metric</th><th style="width:38%">Definition</th><th>Acceptance criterion</th></tr>
+<tr><td>Mean Absolute Error (&#8377;)</td><td>Average absolute difference between predicted and actual opening price</td><td>Lower than the naive baseline on average across folds, and in at least 4 of 5 folds</td></tr>
+<tr><td>MAPE (%)</td><td>Mean absolute error as a percentage of the actual open</td><td>At least 5% relative improvement over the naive baseline (e.g. 0.60% &rarr; 0.57% or better)</td></tr>
+<tr><td>Direction accuracy (%)</td><td>Share of days on which the sign of the predicted gap (up/down) is correct, excluding flat opens</td><td>Above 55%, and significantly above 50% (binomial test, p &lt; 0.05)</td></tr>
+<tr><td>Range coverage</td><td>Share of actual opens that fall inside the predicted 10&ndash;90% band</td><td>Between 75% and 85% (target 80%)</td></tr>
+<tr><td>Statistical significance</td><td>Diebold&ndash;Mariano test of model errors vs baseline errors</td><td>Model better than baseline at the 5% level</td></tr>
+<tr><td>Operational</td><td>End-to-end pipeline run after 16:00 IST</td><td>Predictions for all stocks ready before 09:00 IST next day; fully reproducible from the repository</td></tr>
+</table>
+<p class="small">Note: the naive baseline is hard to beat because most overnight gaps are small and close to random. If the model does not clear these thresholds, the team will report this honestly, together with an analysis of where (which stocks, which market conditions) any predictive signal does or does not exist.</p>
+
+<h2>4. Data Plan</h2>
+<table class="keep">
+<tr><th style="width:17%">Data</th><th style="width:21%">Source and access</th><th style="width:30%">Fields</th><th>Frequency, history and notes</th></tr>
+<tr><td>Daily stock prices (OHLCV)</td><td>TejHQ market data API (<code>/v1/ohlcv/nse/{symbol}</code>); free tier, 1,000 requests/day</td><td>Date, open, high, low, close, previous close, volume, turnover, number of trades</td><td>Daily end of day, 2015 to present; pulled after 16:00 IST; cross-checked against NSE bhavcopy</td></tr>
+<tr><td>Company fundamentals</td><td>CSV compiled from annual and quarterly reports / Screener.in now; Bloomberg terminal (institutional licence) when access is granted. Tracxn to be evaluated, though its coverage is mainly unlisted firms</td><td>Market cap (&#8377; cr), P/E, P/B, EPS (TTM), ROE %, debt-to-equity, sector</td><td>Quarterly; each row dated by its <em>results announcement date</em> so it is used only after it became public</td></tr>
+<tr><td>Market context</td><td>Derived from the stock universe; NIFTY 50 index from the same API</td><td>Market-wide daily return and gap</td><td>Daily. Candidate extensions: overnight US market return, GIFT Nifty, INR/USD</td></tr>
+<tr><td>Calendar</td><td>NSE holiday list</td><td>Trading days, day of week, holidays</td><td>Annual</td></tr>
+</table>
+
+<h3>Features (all known at day <em>t</em>'s close)</h3>
+<p>1-, 5- and 20-day returns; intraday return; today's gap; high&ndash;low range; position of close within the day's range; volume relative to its 20-day average; 20-day volatility; distance from 20-day moving average; day of week; market-wide return and gap; and the latest fundamentals (log market cap, P/E, P/B, EPS, ROE, debt-to-equity).</p>
+
+<h3>Preparation, quality and leakage controls</h3>
+<ul>
+<li><strong>Time-aware validation only:</strong> walk-forward splits; no random shuffling; at least 250 trading days of training history before the first test fold.</li>
+<li><strong>Point-in-time fundamentals:</strong> backward-only as-of join on the announcement date, so no quarter's numbers reach days before publication.</li>
+<li><strong>Corporate actions:</strong> days with overnight moves above &plusmn;20% (splits, bonuses, data errors) are flagged and excluded or adjusted.</li>
+<li><strong>Missing data and holidays:</strong> gaps checked against the NSE calendar; missing fundamentals handled natively by the model (gradient boosting) rather than imputed with future values.</li>
+<li><strong>Bias:</strong> survivorship bias acknowledged (current large caps only); large-cap results may not generalise to small caps.</li>
+<li><strong>Versioning:</strong> raw and processed data stored by date in the team repository with a datasheet (D2).</li>
+</ul>
+
+<h3>Modelling approach (preview of D4)</h3>
+<p>Baselines first (open = previous close; historical mean gap), then linear regression with regularisation, then gradient-boosted trees (scikit-learn HistGradientBoosting, absolute-error loss). The uncertainty band comes from out-of-sample residual quantiles. Experiments are logged with parameters and fold-wise results.</p>
+
+<h3>Responsible data handling</h3>
+<p>The project uses only public market and company-level data; no personal data is collected, so the DPDP Act, 2023 consent requirements are not triggered. Data is used within each provider's licence terms (Bloomberg data stays within the institutional licence and is not redistributed). API keys are kept in an environment variable and never stored in code, documents or the repository. Outputs are presented as an analytical exercise, not investment advice.</p>
+
+<h3>Feasibility</h3>
+<p>Feasibility is high. The data is public and affordable, and a working prototype pipeline (data fetch, feature build, walk-forward training, prediction and Streamlit dashboard) already exists. It has so far been tested end to end on synthetic data only, so performance on real market data is still to be established.</p>
+
+<h2>5. Timeline and Deliverable Ownership</h2>
+<p>Each deliverable has one named lead owner, who is accountable for its quality and on-time submission; the other two members contribute. Every member leads three deliverables (the course requires at least two). Dates are team targets and will be aligned to the deadlines published by faculty.</p>
+<table>
+<tr><th style="width:7%">Code</th><th style="width:24%">Deliverable</th><th style="width:9%">Module</th><th style="width:13%">Target date</th><th style="width:17%">Lead owner</th><th>Key activities</th></tr>
+<tr><td>D1</td><td>Project charter</td><td class="c">M1</td><td>16 Oct 2026</td><td>Jayesh Santosh Shinde</td><td>Problem framing, metrics, data plan, plan and roles</td></tr>
+<tr><td>D2</td><td>Data audit report, datasheet, cleaned versioned dataset</td><td class="c">M2</td><td>30 Oct 2026</td><td>Abhishek Manuel N</td><td>Pull 2015&ndash;present OHLCV, build fundamentals CSV, quality checks, corporate actions, datasheet</td></tr>
+<tr><td>D3</td><td>EDA notebook and two-page insight summary</td><td class="c">M3</td><td>9 Nov 2026</td><td>Abinash Pradhan</td><td>Gap distributions, volatility regimes, results-day effects, stock and sector segments, bias checks</td></tr>
+<tr><td>D4</td><td>Modelling checkpoint with experiment log</td><td class="c">M4</td><td>23 Nov 2026</td><td>Jayesh Santosh Shinde</td><td>Baselines, linear and boosted models, tuning, experiment tracking</td></tr>
+<tr><td>D5</td><td>Evaluation memo</td><td class="c">M5</td><td>2 Dec 2026</td><td>Abhishek Manuel N</td><td>Walk-forward design, leakage checklist, metrics vs baseline, significance tests, error analysis</td></tr>
+<tr><td>D6</td><td>Deployment and monitoring plan (prototype)</td><td class="c">M6</td><td>9 Dec 2026</td><td>Abinash Pradhan</td><td>Daily batch pipeline, Streamlit dashboard, drift monitoring, retraining schedule</td></tr>
+<tr><td>D7</td><td>Draft report, model card, dry-run presentation</td><td class="c">M7</td><td>18 Dec 2026</td><td>Jayesh Santosh Shinde</td><td>Report draft, model card and limitations, rehearsal and peer critique</td></tr>
+<tr><td>E1</td><td>Final project report</td><td class="c">End of term</td><td>As published</td><td>Abhishek Manuel N</td><td>Final report for a decision-maker audience</td></tr>
+<tr><td>E2</td><td>Final presentation with individual Q&amp;A</td><td class="c">End of term</td><td>As published</td><td>Abinash Pradhan</td><td>Storyline, visuals; every member presents a section</td></tr>
+</table>
+
+<h3>Team roles and ways of working</h3>
+<table class="keep">
+<tr><th style="width:26%">Member</th><th style="width:34%">Primary role</th><th>Leads</th></tr>
+<tr><td>Jayesh Santosh Shinde</td><td>Project coordination and modelling</td><td>D1, D4, D7</td></tr>
+<tr><td>Abhishek Manuel N</td><td>Data engineering and evaluation</td><td>D2, D5, E1</td></tr>
+<tr><td>Abinash Pradhan</td><td>Analysis, visualisation and deployment</td><td>D3, D6, E2</td></tr>
+</table>
+<ul>
+<li>Weekly team meeting with a written meeting log (attendance, decisions, actions, owners).</li>
+<li>All code and data versions in a shared team repository; contribution evidenced through commit history.</li>
+<li>A written agenda of blockers brought to each scheduled faculty consultation.</li>
+<li>Internal deadline two days before each published deadline for peer review by the non-lead members.</li>
+</ul>
+
+<h2>6. Key Risks and Mitigations</h2>
+<table class="keep">
+<tr><th style="width:32%">Risk</th><th style="width:12%">Impact</th><th>Mitigation</th></tr>
+<tr><td>Model fails to beat the naive baseline (gaps are largely random)</td><td>High</td><td>Report honestly; analyse segments (results days, high-volatility periods) where signal exists; test exogenous global cues</td></tr>
+<tr><td>API outage, rate limits or network restrictions</td><td>Medium</td><td>Cache all downloaded data locally; incremental top-ups; NSE bhavcopy as fallback source</td></tr>
+<tr><td>Bloomberg / Tracxn access delayed</td><td>Medium</td><td>Fundamentals already handled through a CSV interface built from public reports; swap source later without code changes</td></tr>
+<tr><td>Data leakage (look-ahead in features or fundamentals)</td><td>High</td><td>Point-in-time joins, walk-forward splits, leakage checklist reviewed in D5</td></tr>
+<tr><td>Corporate actions distort prices</td><td>Medium</td><td>Flag and exclude extreme gaps; use adjusted prices where available</td></tr>
+<tr><td>Uneven workload or missed deadlines</td><td>Medium</td><td>Named owners, internal deadlines, weekly log reviewed by the team</td></tr>
+</table>
+
+<h2>7. Sign-off</h2>
+<table class="keep">
+<tr><th style="width:34%">Name</th><th style="width:30%">Role</th><th>Signature / Date</th></tr>
+<tr><td>Jayesh Santosh Shinde</td><td>Team member</td><td style="height:20pt"></td></tr>
+<tr><td>Abhishek Manuel N</td><td>Team member</td><td style="height:20pt"></td></tr>
+<tr><td>Abinash Pradhan</td><td>Team member</td><td style="height:20pt"></td></tr>
+<tr><td>Mr Nikhil D Jonathan</td><td>Faculty</td><td style="height:20pt"></td></tr>
+</table>
+</body></html>
