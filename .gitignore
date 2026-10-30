@@ -1,0 +1,11 @@
+data/raw/
+data/processed/
+data/us/
+data/fx/
+data/SYNTHETIC_DATA
+models/
+.env
+__pycache__/
+.pytest_cache/
+data/company_profiles/
+data/intraday/
